@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Age 3</title>
+  <style>
+    body {
+      font-family: arial;
+      box-sizing: border-box;
+      background: #FC466B;
+      background: -webkit-linear-gradient(to right, #3F5EFB, #FC466B);
+      background: linear-gradient(to right, #3F5EFB, #FC466B);
+      background-size: cover;
+      width: 100vw;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      color: white;
+      font-family: sofia;
+      text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.9);
+
+    }
+
+    input {
+      font-size: 20px;
+      width: 50%;
+    }
+
+    #input {
+      border: 1px solid #cdcdcd;
+      border-radius: 5px;
+      background: #FC466B;
+      background: -webkit-linear-gradient(to right, #3F5EFB, #FC466B);
+      background: linear-gradient(to right, #3F5EFB, #FC466B);
+      padding: 24px;
+      margin-bottom: 22px;
+      font-size: 14px;
+      font-weight: bold;
+      width: 30vw;
+      margin-left: 33%;
+      text-align: center;
+      box-shadow: 0px 10px 20px -6px #e61111;
+      margin-top: 20px;
+
+    }
+
+    button {
+      color: white;
+      text-align: center;
+      background-color: #428bca;
+      display: inline-block;
+      padding: 6px 12px;
+      margin-bottom: 0;
+      font-size: 14px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      margin: 0px;
+    }
+
+    button:hover {
+      background-color: #4382b7;
+      cursor: pointer;
+    }
+
+    #bottom {
+      display: none;
+      border: 1px solid #cdcdcd;
+      box-shadow: 0px 10px 20px -6px #e61111;
+      margin-left: 33%;
+      border-radius: 5px;
+      background: #FC466B;
+      background: -webkit-linear-gradient(to left, #3F5EFB, #FC466B);
+      background: linear-gradient(to left, #3F5EFB, #FC466B);
+      padding: 20px;
+      width: 30vw;
+      box-shadow: 0px 10px 20px -6px #000;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    span {
+      font-weight: bold;
+    }
+  </style>
+
+</head>
+
+<body>
+  <h1 style="text-align:center">AGE CALCULATOR</h1>
+  <div id="input">
+    <form>
+      <label for="dob">Date Of Birth:</label><br />
+      <input type="date" name="dob" id="dob" value="2000-11-05" /><br /><br />
+      <label for="bd">Age At Date:</label><br />
+      <input type="date" name="bd" id="bd" /><br /><br />
+      <button type="button" onclick="cal()">Calculate</button>
+    </form>
+  </div>
+  <div id="bottom">
+
+    <span>Age:</span>
+    <p id="age"></p><br />
+    <span>Age In Months:</span>
+    <p id="months"></p><br />
+    <span>Age In Weeks:</span>
+    <p id="weeks"></p><br />
+    <span>Age In Days:</span>
+    <p id="days"></p><br />
+    <span>Age In Hours:</span>
+    <p id="hours"></p><br />
+    <span>Age In Minutes:</span>
+    <p id="minutes"></p><br />
+    <span>Age In Seconds:</span>
+    <p id="seconds"></p><br />
+
+  </div>
+
+
+  <script>
+    var currentDate = new Date();
+    var currentDateTostring = currentDate.toISOString();
+    var today = currentDateTostring.split("T")
+    document.getElementById('bd').value = today[0];
+
+    function cal() {
+      if (dob.value == "") {
+        alert("Please Input Date Of Birth");
+      } else if (dob.value > bd.value) {
+        alert("Please Enter a Valid Date");
+      } else {
+        document.getElementById('bottom').style.display = "block";
+        var a = new Date(bd.value);
+        var b = new Date(dob.value);
+        var r = a.getTime() - b.getTime();
+        var u = new Date(r);
+        var v = new Date(0);
+        var year = u.getFullYear() - v.getFullYear();
+        var month = u.getMonth() - v.getMonth();
+        var day = u.getDate() - v.getDate();
+        document.getElementById('age').innerHTML = year + " Years ," + month + " Months ," + day + " Days .";
+        var m = (year * 12) + month
+        document.getElementById('months').innerHTML = m + " Months, " + day + " Days .";
+        var w = (m * 4.345);
+        w = Math.round(w);
+        document.getElementById('weeks').innerHTML = w + " Weeks, " + day + " Days ."
+        var d = (w * 7) + day;
+        document.getElementById('days').innerHTML = d + " Days."
+        var h = d * 24;
+        document.getElementById('hours').innerHTML = h + " Hours."
+        var mi = h * 60;
+        document.getElementById('minutes').innerHTML = mi + " Minutes."
+        var s = mi * 60;
+        document.getElementById('seconds').innerHTML = s + " Seconds."
+      }
+    }
+  </script>
+</body>
+
+</html>

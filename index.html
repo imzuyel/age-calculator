@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=
+  , initial-scale=1.0">
+  <title>Age1</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0a6cf1;
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  width: 50%;
+  max-width: 450px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px 30px;
+}
+
+.container * {
+  border: none;
+  outline: none;
+}
+
+.input-wrapper {
+  background-color: #8d3c3c;
+  padding: 30px 25px;
+  border-radius: 8px;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 30px;
+}
+
+.input-wrapper span {
+  font-size: 16px;
+  color: white;
+}
+
+.date-data {
+  display: grid;
+  place-items: center;
+  margin-bottom: 15px;
+}
+
+input,
+button {
+  height: 50px;
+
+  border-radius: 5px;
+}
+
+input {
+  width: 80%;
+  padding: 0 20px;
+  font-size: 15px;
+}
+
+button {
+  margin-top: 35px;
+  width: 30%;
+  float: right;
+  font-size: 18px;
+}
+
+button:hover {
+  background-color: #0a6cf1;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+}
+
+.output-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.output-wrapper div {
+  height: 100px;
+  width: 100px;
+  background-color: #36e9e0;
+  border-radius: 5px;
+  color: white;
+  display: grid;
+  place-items: center;
+  padding: 20px 0;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.3);
+}
+
+span {
+  font-size: 30px;
+}
+
+p {
+  color: #ffff;
+}
+
+</style>
+</head>
+
+<body>
+  <!-- Date one -->
+<div class="container">
+  <div class="input-wrapper">
+    <div class="date-data">
+      <span>Birtday Date </span>
+      <input type="date" name="" id="date-input" /><br />
+    </div>
+    <div class="date-data">
+      <span>Your Date</span>
+      <input type="date" name="" id="date-ref" />
+    </div>
+    <div class="date-data">
+      <button onclick="agecalculate()">Calculate</button>
+    </div>
+  </div>
+
+  <div class="output-wrapper">
+    <div>
+      <span id="years">-</span>
+      <p>Years</p>
+    </div>
+    <div>
+      <span id="months">-</span>
+      <p>Months</p>
+    </div>
+    <div>
+      <span id="days">-</span>
+      <p>Days</p>
+    </div>
+  </div>
+</div>
+  <!-- Date two -->
+
+<script>
+  const months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    function agecalculate() {
+      let refData = new Date(document.getElementById("date-ref").value);
+      let birthDate = new Date(document.getElementById("date-input").value);
+      let Months, Days, Years;
+
+      let inDetails = {
+        date: birthDate.getDate(),
+        month: birthDate.getMonth() + 1,
+        year: birthDate.getFullYear(),
+      };
+      let refDate = refData.getDate();
+      let refYear = refData.getFullYear();
+      let refMonth = refData.getMonth() + 1;
+
+      leapCheck(refYear);
+
+      if (
+        inDetails.year > refYear ||
+        (inDetails.year == refYear && inDetails.month > refMonth) ||
+        (inDetails.year == refYear &&
+          inDetails.month == refMonth &&
+          inDetails.date > refDate)
+      ) {
+        alert("Not Born Yet");
+        display("-", "-", "-");
+        return;
+      }
+
+      Years = refYear - inDetails.year;
+
+      if (refMonth >= inDetails.month) {
+        Months = refMonth - inDetails.month;
+      } else {
+        Years--;
+        Months = 12 + refMonth - inDetails.month;
+      }
+      if (refDate >= inDetails.date) {
+        Days = refDate - inDetails.date;
+      } else {
+        Months--;
+        let days = months[refMonth - 2];
+        Days = days + refDate - inDetails.date;
+        if (Months < 0) {
+          Months = 11;
+          Years--;
+        }
+      }
+
+      console.log(Years, Months, Days);
+      display(Years, Months, Days);
+    }
+
+    function leapCheck(year) {
+      if (year % 4 == 0 || (year % 100 == 0 && year % 400 == 0)) {
+        months[1] = 29;
+      } else {
+        months[1] = 28;
+      }
+      console.log(year, months[1]);
+    }
+
+    function display(year, month, day) {
+      document.getElementById("years").textContent = year;
+      document.getElementById("months").textContent = month;
+      document.getElementById("days").textContent = day;
+    }
+
+</script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+<html>
+
+<head>
+  <title>Age 2</title>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <style>
+    body {
+      background-color: #eff0f4;
+    }
+
+    .center {
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      box-shadow: 3px 3px 3px #d0d0d0, -3px -3px 3px #f8f8f8;
+      width: 400px;
+      margin: 0 auto;
+      margin-top: 51px;
+
+      padding: 20px inherit;
+    }
+
+    #lb1 {
+      color: #777777;
+
+      font-size: 20px;
+      margin-top: 31px;
+    }
+
+    #dateInp {
+
+      height: 45px;
+      display: block;
+      width: 60%;
+      border-radius: 30px;
+      border: none;
+      background-color: transparent;
+      font-size: 16px;
+      padding: 10px 15px;
+      color: #777777;
+      box-shadow: inset 3px 3px 3px #d0d0d0, inset -3px -3px 3px #f8f8f8;
+      margin-top: 10px;
+    }
+
+    #calcBtn {
+
+      padding: 10px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #777777;
+      background-color: transparent;
+      line-height: 1.5;
+      cursor: pointer;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      display: inline-block;
+      border: none;
+      box-shadow: 3px 3px 3px #d0d0d0, -3px -3px 3px #f8f8f8;
+      margin-top: 10px;
+
+    }
+
+    #resultDiv {
+      box-shadow: inset 3px 3px 3px #d0d0d0, inset -3px -3px 3px #f8f8f8;
+      margin-top: 40px;
+      width: 250px;
+      height: 200px;
+
+      visibility: hidden;
+      padding: 4px 10px;
+      margin-bottom: 10px;
+    }
+
+    .resP {
+      visibility: hidden;
+      box-shadow: 3px 3px 3px #d0d0d0, -3px -3px 3px #f8f8f8;
+      padding: 10px;
+      margin-bottom: -6px;
+
+    }
+
+    #resultDiv p {
+      font-size: 14px;
+      text-align: center;
+    }
+
+    #resultDiv p b {
+      color: #777;
+      font-size: 15px;
+    }
+
+    #dfl {
+      color: white;
+      text-shadow: 1px 1px 1px black;
+    }
+
+    #ddy {
+      color: #dbdbdb;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="center">
+    <label id="lb1" for="dateInp"> Birth Day : </label>
+    <input id="dateInp" type="date"></input>
+    <br />
+    <button id="calcBtn">Age calculator</button>
+
+    <div id="resultDiv">
+      <p class="resP">Your age is:</p>
+      <p class="resP"> <b id="yP"></b> Year </p>
+      <p class="resP"> <b id="mP"></b> Month </p>
+      <p class="resP"><b id="dP"></b> Day</p>
+    </div>
+
+  </div>
+  <script>
+
+    window.onload = function () {
+
+      var dateInp = document.getElementById("dateInp"),
+        calcBtn = document.getElementById("calcBtn"),
+        resP = document.getElementsByClassName("resP"),
+        resDiv = document.getElementById("resultDiv"),
+        yP = document.getElementById("yP"),
+        mP = document.getElementById("mP"),
+        dP = document.getElementById("dP");
+
+      var date = new Date(),
+        day = date.getDate(),
+        month = date.getMonth() + 1,
+        year = date.getFullYear();
+      maxDay = day;
+
+      /// set max date
+      if (day < 10) {
+        maxDay = "0" + day;
+      }
+      dateInp.max = year + "-" + month + "-" + maxDay;
+      dateInp.value = year + "-" + month + "-" + maxDay;
+
+      calcBtn.onclick = function () {
+        for (y = 0; y < resP.length; y++) {
+          resP[y].style.visibility = "hidden";
+        }
+        resDiv.style.visibility = "visible"
+        var birthDate = dateInp.value.split("-"),
+          birthYear = birthDate[0],
+          birthMonth = birthDate[1],
+          birthDay = birthDate[2];
+
+        var resDay = day - birthDay,
+          resYear = year - birthYear,
+          resMonth = month - birthMonth;
+
+
+        if (resDay < 0) {
+          resDay = resDay + 30;
+          resMonth = resMonth - 1;
+        }
+
+        if (resMonth < 0) {
+          resMonth = resMonth + 12;
+          resYear = resYear - 1;
+        }
+        yP.innerText = resYear;
+        mP.innerText = resMonth;
+        dP.innerText = resDay;
+
+        var xd = 0;
+        var display = setInterval(function () {
+          if (xd != resP.length) {
+            resP[xd].style.visibility = "visible";
+            xd += 1;
+          }
+          else {
+            clearInterval(display);
+          }
+        }, 250);
+
+      }
+
+    }
+  </script>
+</body>
+
+</html>
